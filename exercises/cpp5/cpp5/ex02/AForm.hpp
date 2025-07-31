@@ -5,19 +5,19 @@
 
 class Bureaucrat; 
 
-class Form{
-private:
+class AForm{
+protected:
 	const std::string name_;
 	bool signed_;
 	const int sign_grade_;
 	const int exec_grade_;
 
 public:
-	Form(); 
-	Form(const std::string &name_, const int sign_grade_, const int exec_grade_);
-	~Form();
-	Form(const Form &other);
-	Form &operator=(const Form &other);
+	AForm(); 
+	AForm(const std::string &name_, const int sign_grade_, const int exec_grade_);
+	~AForm();
+	AForm(const AForm &other);
+	AForm &operator=(const AForm &other);
 
 	std::string getName() const;
 	int getSignGrade() const;
@@ -26,19 +26,23 @@ public:
 
 	void beSigned(Bureaucrat b);
 
+	void execute(Bureaucrat const & executor) const;
+
+	virtual void doAction() = 0;
+
 	class GradeTooHighException : public std::exception { 
 	public:
 		const char* what() const throw() {
-			return "Grade_ is too high for this form!";
+			return "Grade_ is too high for this Form!";
 		}
 	};
 
 	class GradeTooLowException : public std::exception {
 	public:
 		const char* what() const throw() {
-			return "Grade_ is too low for this form!";
+			return "Grade_ is too low for this Form!";
 		}
 	};
 };
 
-std::ostream &operator<<(std::ostream &out, const Form &form);
+std::ostream &operator<<(std::ostream &out, const AForm &AForm);

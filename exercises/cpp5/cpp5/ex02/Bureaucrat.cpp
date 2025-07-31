@@ -35,6 +35,10 @@ void Bureaucrat::signForm(Form &form){
 	form.beSigned(*this);
 }
 
+void executeForm(AForm const & form) const{
+	form->execute(*this);
+}
+
 
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &bureaucrat){
 	out << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << std::endl;
