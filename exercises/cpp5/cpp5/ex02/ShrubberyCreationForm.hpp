@@ -1,6 +1,8 @@
 #pragma once
 #include "AForm.hpp"
-class ShrubberyCreationForm : ShrubberyCreationForm {
+#include <fstream>
+
+class ShrubberyCreationForm : public AForm {
 private:
     std::string target_;
 
@@ -11,5 +13,5 @@ public:
 	ShrubberyCreationForm &operator=(const ShrubberyCreationForm &other);
 
 protected:
-	void doAction();
-}
+	void doAction() const;
+};

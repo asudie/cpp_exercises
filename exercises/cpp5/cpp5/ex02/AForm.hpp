@@ -28,7 +28,7 @@ public:
 
 	void execute(Bureaucrat const & executor) const;
 
-	virtual void doAction() = 0;
+	virtual void doAction() const = 0;
 
 	class GradeTooHighException : public std::exception { 
 	public:

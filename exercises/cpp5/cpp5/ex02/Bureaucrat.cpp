@@ -31,12 +31,12 @@ void Bureaucrat::decrementGrade(){
 	grade++;
 }
 
-void Bureaucrat::signForm(Form &form){
+void Bureaucrat::signForm(AForm &form){
 	form.beSigned(*this);
 }
 
-void executeForm(AForm const & form) const{
-	form->execute(*this);
+void Bureaucrat::executeForm(const AForm &form) const{
+	form.execute(*this);
 }
 
 
