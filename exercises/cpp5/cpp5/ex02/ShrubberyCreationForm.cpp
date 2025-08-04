@@ -13,9 +13,10 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=(const ShrubberyCreationF
 }
 void ShrubberyCreationForm::doAction() const {
     std::ofstream file((target_ + "_shrubbery").c_str());
-    if(!file)
+    if(!file){
         std::cerr << "Failed to open file" << std::endl;
-    return;
+        return;
+    }
     file << "       _-_" << std::endl;
 	file << "    /~~   ~~\\" << std::endl;
 	file << " /~~         ~~\\" << std::endl;
