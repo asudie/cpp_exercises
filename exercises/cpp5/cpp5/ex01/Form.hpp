@@ -12,7 +12,7 @@ private:
 	const int sign_grade_;
 	const int exec_grade_;
 
-protected:
+public:
 	Form(); 
 	Form(const std::string &name_, const int sign_grade_, const int exec_grade_);
 	~Form();
