@@ -15,7 +15,7 @@ protected:
 public:
 	AForm(); 
 	AForm(const std::string &name_, const int sign_grade_, const int exec_grade_);
-	~AForm();
+	virtual ~AForm() = 0;
 	AForm(const AForm &other);
 	AForm &operator=(const AForm &other);
 

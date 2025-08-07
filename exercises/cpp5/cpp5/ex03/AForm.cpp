@@ -8,7 +8,7 @@ AForm::AForm(const std::string &name_, const int sign_grade_, const int exec_gra
 	else if(sign_grade_ > 150 || exec_grade_ > 150)
 		throw GradeTooLowException();
 	}
-AForm::~AForm(){}
+AForm::~AForm() {}
 AForm::AForm(const AForm &other) : name_(other.name_), signed_(other.signed_),
 	sign_grade_(other.sign_grade_), exec_grade_(other.exec_grade_){}
 AForm &AForm::operator=(const AForm &other){
