@@ -1,38 +1,25 @@
-#include "Bureaucrat.hpp"
+#include "ScalarConverter.hpp"
 
-Bureaucrat::Bureaucrat() : name("Default"), grade(150) {}
-Bureaucrat::Bureaucrat(const std::string &name, int grade) : name(name){
-	if(grade < 1)
-		throw GradeTooHighException();
-	else if(grade > 150)
-		throw GradeTooLowException();
-	this->grade = grade;
-}
-Bureaucrat::~Bureaucrat(){}
-Bureaucrat::Bureaucrat(const Bureaucrat &other) : name(other.name), grade(other.grade){}
-Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other){
-	if (this != &other) {
-		this->grade = other.grade;
-	}
+ScalarConverter::ScalarConverter() {}
+ScalarConverter::ScalarConverter(){}
+ScalarConverter::~ScalarConverter(){}
+ScalarConverter::ScalarConverter(const ScalarConverter &other){}
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other){
 	return *this;
 }
 
-const std::string &Bureaucrat::getName() const{ return this->name;}
-int Bureaucrat::getGrade() const{ return this->grade;}
-
-void Bureaucrat::incrementGrade(){
-	if(grade == 1)
-		throw GradeTooHighException();
-	grade--;
-}
-void Bureaucrat::decrementGrade(){
-	if(grade == 150)
-		throw GradeTooLowException();
-	grade++;
+static bool isChar(const std::string &str){
+	return str.size() == 3 && str[0] == '\'' && str[2] == '\'';
 }
 
+void ScalarConverter::convert(const std::string &str){
+	if(isChar(str)){
+		char c = str[1];
+		std::cout << "char: '" << c << "'" << std::endl;
+		std::cout << "int: " << static_cast<int>(c) << std::endl;
+		std::cout << "float: " << static_cast<float>(c) << std::endl;
+		std::cout << "int: " << static_cast<int>(c) << std::endl;
 
-std::ostream &operator<<(std::ostream &out, const Bureaucrat &bureaucrat){
-	out << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << std::endl;
-	return out;
+	}
+
 }
