@@ -1,6 +1,8 @@
 #include "ScalarConverter.hpp"
 
 int main(){
-	ScalarConverter::convert("42");
+	ScalarConverter::convert("'c'");
+	std::cout << "------------------" << std::endl;
+	ScalarConverter::convert("+inf");
 	return 0;
 }

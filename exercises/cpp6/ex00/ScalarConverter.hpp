@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <stdexcept>
+#include <iomanip>
 
 class ScalarConverter{
 protected:
