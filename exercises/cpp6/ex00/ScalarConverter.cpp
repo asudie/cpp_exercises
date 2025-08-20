@@ -13,7 +13,7 @@ static bool isChar(const std::string &str){
 }
 
 static bool isPseudo(const std::string &str){
-	return (str == "nan" || str == "+inf" || str == "-inf" || str == "nanf" || str == "+inf" || str == "-inf");
+	return (str == "nan" || str == "+inf" || str == "-inf" || str == "nanf" || str == "+inf" || str == "-inf" || str == "+inff" || str == "-inff");
 }
 
 static void printChar(char c){
@@ -28,11 +28,17 @@ static void printPseudo(const std::string &str){
 	bool isFloat = str.find('f') != std::string::npos;
 		std::cout << "char: impossible" << std::endl;
 		std::cout << "int: impossible" << std::endl;
-		if(isFloat)
-		std::cout << "float: " << str << std::endl;
-		std::cout << "double: " << str << std::endl;
-		std::cout << "double: " << str.substr(0, str.size()-1) << std::endl; // HOW TO REPRESENT INFs
-
+		if(isFloat){
+			std::cout << "float: " << str << std::endl;
+			if(str.find("ff") != std::string::npos)
+				std::cout << "double: " << str.substr(0, str.size()-1) << std::endl;
+			else
+				std::cout << "double: " << str << std::endl;
+		} else {
+			std::cout << "float: " << str << "f" << std::endl;
+			std::cout << "double: " << str << std::endl;
+		}
+		return;
 }
 
 void ScalarConverter::convert(const std::string &str){
