@@ -4,6 +4,8 @@
 #include <iostream>
 #include <stdexcept>
 #include <iomanip>
+#include <climits>
+#include <cerrno>
 
 class ScalarConverter{
 protected:
