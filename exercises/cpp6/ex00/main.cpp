@@ -7,7 +7,10 @@ int main(){
 	std::cout << "------------------" << std::endl;
 	ScalarConverter::convert("nan");
 	std::cout << "------------------" << std::endl;
-	std::cout << "------------------" << std::endl;
 	ScalarConverter::convert("+inff");
+	std::cout << "------------------" << std::endl;
+	ScalarConverter::convert("234678");
+	std::cout << "------------------" << std::endl;
+	ScalarConverter::convert("2.095f");
 	return 0;
 }

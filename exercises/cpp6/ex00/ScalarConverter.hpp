@@ -6,6 +6,8 @@
 #include <iomanip>
 #include <climits>
 #include <cerrno>
+#include <cstdlib>
+#include <cmath>
 
 class ScalarConverter{
 protected:
