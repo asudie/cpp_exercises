@@ -12,5 +12,7 @@ int main(){
 	ScalarConverter::convert("234678");
 	std::cout << "------------------" << std::endl;
 	ScalarConverter::convert("2.095f");
+	std::cout << "------------------" << std::endl;
+	ScalarConverter::convert("54.452");
 	return 0;
 }

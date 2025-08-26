@@ -49,14 +49,30 @@ static void printInt(long lval){
         std::cout << "char: Non displayable" << std::endl;
     std::cout << "int: " << val << std::endl;
     std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(val) << "f" << std::endl;
-	std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(val) << "f" << std::endl;
+	std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(val) << std::endl;
 }
 
 static void printFloat(float val){
     if(val >= 32 && val <= 126)
         std::cout << "char: '" << static_cast<char>(val) << "'" << std::endl;
     else if(std::isnan(val) || std::isinf(val))
-        std::cout << "char: impossib;e" << std::endl;
+        std::cout << "char: impossible" << std::endl;
+    else
+        std::cout << "char: Non displayable" << std::endl;
+    if(val < INT_MIN || val > INT_MAX || std::isnan(val) || std::isinf(val))
+        std::cout << "int: impossible" << std::endl;
+    else
+        std::cout << "int: " << static_cast<int>(val) << std::endl;
+    std::cout << "float: " << std::fixed << std::setprecision(1) << val << "f" << std::endl;
+	std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(val) << std::endl;
+    return;
+}
+
+static void printDouble(double val){
+    if(val >= 32 && val <= 126)
+        std::cout << "char: '" << static_cast<char>(val) << "'" << std::endl;
+    else if(std::isnan(val) || std::isinf(val))
+        std::cout << "char: impossible" << std::endl;
     else
         std::cout << "char: Non displayable" << std::endl;
     if(val < INT_MIN || val > INT_MAX || std::isnan(val) || std::isinf(val))
@@ -64,7 +80,7 @@ static void printFloat(float val){
     else
         std::cout << "int: " << static_cast<int>(val) << std::endl;
     std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(val) << "f" << std::endl;
-	std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(val) << "f" << std::endl;
+	std::cout << "double: " << std::fixed << std::setprecision(1) << val << std::endl;
     return;
 }
 
@@ -76,8 +92,14 @@ static void printNormal(const std::string &str){
         return printInt(lval);
     errno = 0;
     float fval = std::strtof(str.c_str(), &end);
-    if(*end == 'f' && *(end + 1) == '\0' && errno != ERANGE)
+    if(*end == 'f' && *(end + 1) == '\0' && errno != ERANGE){
         return printFloat(fval);
+	}
+	errno = 0;
+    double dval = std::strtod(str.c_str(), &end);
+	if(*end == '\0' && errno != ERANGE)
+		return printDouble(dval);
+	
 }
 
 void ScalarConverter::convert(const std::string &str){
