@@ -99,6 +99,10 @@ static void printNormal(const std::string &str){
     double dval = std::strtod(str.c_str(), &end);
 	if(*end == '\0' && errno != ERANGE)
 		return printDouble(dval);
+	std::cout << "char: impossible" << std::endl;
+    std::cout << "int: impossible" << std::endl;
+    std::cout << "float: impossible" << std::endl;
+    std::cout << "double: impossible" << std::endl;
 	
 }
 
@@ -109,6 +113,4 @@ void ScalarConverter::convert(const std::string &str){
 		return printPseudo(str);
 	printNormal(str);
 }
-
-//////////////////////////////////////////////////////////////////
 
