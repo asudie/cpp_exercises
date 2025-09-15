@@ -18,10 +18,26 @@ Array<T>::~Array(){
 template <typename T>
 Array<T>::Array(const Array &other) : size_(other.size_)
 {
-    // here
+    if(other.size_ > 0){
+        this->data_ = new T[other.size_];
+
+        for(unsigned int i = 0; i < other.size_; i++)
+            this->data_[i] = other.data_[i];
+    } else{
+        this->data_ = NULL;
+    }
 }
 
-   // Array &operator=(const Arras &other);
-   // Array *operator[](int index);
+template <typename T>
+Array<T>& Array<T>::operator=(const Array &other){
+    Array<T> arr(other);
+    return arr;
+}
+
+// Array *operator[](int index);
+
 template <typename T>
 unsigned int Array<T>::size(){return size_;}
+
+template <typename T>
+T* Array<T>::getData(){return data_;}

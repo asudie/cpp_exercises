@@ -13,9 +13,10 @@ public:
     Array(unsigned int n);
     ~Array();
     Array(const Array &other);
-   // Array &operator=(const Arras &other);
+    Array &operator=(const Array &other);
   //  Array *operator[](int index);
     unsigned int size();
+    T* getData();
 };
 
 #include "Array.tpp"
