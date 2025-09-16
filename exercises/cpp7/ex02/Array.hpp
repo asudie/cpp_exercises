@@ -14,9 +14,18 @@ public:
     ~Array();
     Array(const Array &other);
     Array &operator=(const Array &other);
-  //  Array *operator[](int index);
+    T &operator[](int index);
     unsigned int size();
     T* getData();
+    void setData(unsigned int i, T el);
+
+	class OutOfRange : public std::exception {
+	public:
+		const char* what() const throw() {
+			return "Index is out of range";
+		}
+	};
+
 };
 
 #include "Array.tpp"

@@ -18,10 +18,19 @@ int main()
     Array<double> a3(a2);
     std::cout << "A3 size is " << a3.size() << std::endl;
     just_print(a3);
-    std::cout << "<-----------------------------copy constructor" << std::endl;
+    a2.setData(1, 2);
+    std::cout << "<-----------------------------changed a2 and print a3" << std::endl;
+    just_print(a3);
+    std::cout << "<-----------------------------copy assignment" << std::endl;
     Array<double> a4;
     a4 = a2;
     std::cout << "A4 size is " << a4.size() << std::endl;
     just_print(a4);
+    std::cout << "[] -  " <<  a4[0] << std::endl;
+    try{
+        std::cout << "[] -  " <<  a4[-1] << std::endl;
+    } catch (const std::exception &e){
+		std::cerr << "Exeption: " << e.what() << std::endl;
+	}
     return 0;
 }
