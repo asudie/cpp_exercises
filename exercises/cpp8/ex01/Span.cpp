@@ -1,18 +1,17 @@
 #include "Span.hpp"
 
-Span::Span() : N(N), data_(NULL){}
+// Span::Span() : N(N), data_(NULL), filled(0){}
 Span::Span(unsigned int N) : N(N){
-    data_ = new int[N];
+    std::cout << "Constructor!" << std::endl;
 }
 Span::~Span(){
-    if(data_)
-        delete[] data_;
-        data_ = NULL;
+        std::cout << "Destructor!" << std::endl;
 }
-Span::Span(const Span &other)
+/*Span::Span(const Span &other)
 {
     if(other.N > 0){
         this->data_ = new int[other.N];
+        this->filled = other.filled;
 
         for(unsigned int i = 0; i < other.N; i++)
             this->data_[i] = other.data_[i];
@@ -26,6 +25,7 @@ Span& Span::operator=(const Span &other){
     {
         delete[] this->data_;
         this->N = other.N;
+        this->filled = other.filled;
 
         if(other.N > 0){
         this->data_ = new int[other.N];
@@ -37,9 +37,56 @@ Span& Span::operator=(const Span &other){
         }
     }
     return *this;
+}*/
+
+void Span::addNumber(int n){
+    if(data_.size() < N)
+        data_.push_back(n);
+     else
+        throw OutOfRange();
+    std::cout << "Added a number!" << std::endl;
 }
 
-void Span::addNumber(){}
-int Span::shortestSpan(){}
-int Span::longestSpan(){}
+void Span::printArray(){
+    std::vector<int>::iterator it = data_.begin();
+    for(; it != data_.end(); it++)
+        std::cout << *it << std::endl;
+}
+int Span::shortestSpan(){
+    if(data_.size() < 2)
+        throw SpanNotEnough();
+    std::vector<int> sorted = data_;
+    std::sort(sorted.begin(), sorted.end());
+    int min = sorted[1] - sorted[0];
+    for(unsigned int i = 2; i < sorted.size(); i++)
+    {
+        if(sorted[i] - sorted[i - 1] < min)
+            min = sorted[i] - sorted[i - 1];
+    }
+
+    return min;
+}
+
+int Span::findMin(){
+    //  if(data_.size() < 2)
+    //     throw SpanNotEnough();
+    std::vector<int>::iterator it = std::min_element(data_.begin(), data_.end());
+    if(it != data_.end())
+        return *it;
+    else
+        throw SpanNotEnough(); // test this shit!!!
+}
+int Span::findMax(){
+    std::vector<int>::iterator it = std::max_element(data_.begin(), data_.end());
+    if(it != data_.end())
+        return *it;
+    else
+        throw SpanNotEnough(); // test this shit!!!
+}
+
+int Span::longestSpan(){
+    if(data_.size() < 2)
+        throw SpanNotEnough();
+    return findMax() - findMin();
+}
 unsigned int Span::getN(){return N;}
