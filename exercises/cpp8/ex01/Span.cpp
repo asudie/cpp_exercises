@@ -45,10 +45,10 @@ void Span::addNumber(int n){
     std::cout << "Added a number!" << std::endl;
 }
 
-void Span::addMultiple(unsighed int n){
+/*void Span::addMultiple(unsigned int n){
     for(unsigned int i = 0; i < n; i++)
         addNumber();
-}
+}*/
 
 void Span::printArray(){
     std::vector<int>::iterator it = data_.begin();
