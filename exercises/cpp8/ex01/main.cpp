@@ -10,6 +10,11 @@ sp.addNumber(9);
 sp.addNumber(11);
 sp.printArray();
 std::cout << "HERE!!!!!" << std::endl;
+Span copy_c = Span(sp);
+Span copy_o = Span(1);
+copy_o.addNumber(123);
+copy_o = sp;
+
 std::cout << sp.shortestSpan() << std::endl;
 std::cout << sp.longestSpan() << std::endl;
 return 0;

@@ -7,37 +7,35 @@ Span::Span(unsigned int N) : N(N){
 Span::~Span(){
         std::cout << "Destructor!" << std::endl;
 }
-/*Span::Span(const Span &other)
+Span::Span(const Span &other)
 {
     if(other.N > 0){
-        this->data_ = new int[other.N];
-        this->filled = other.filled;
-
-        for(unsigned int i = 0; i < other.N; i++)
-            this->data_[i] = other.data_[i];
+        this->data_ = other.data_;
+        this->N = other.N;
     } else{
-        this->data_ = NULL;
+        data_.clear();
+        N = 0;
     }
+    std::cout << "Copy constructor: size = " << this->N << std::endl;
+    printArray();
 }
 
-Span& Span::operator=(const Span &other){
+ Span& Span::operator=(const Span &other){
     if(this != &other)
     {
-        delete[] this->data_;
         this->N = other.N;
-        this->filled = other.filled;
 
         if(other.N > 0){
-        this->data_ = new int[other.N];
-
-        for(unsigned int i = 0; i < other.N; i++)
-            this->data_[i] = other.data_[i];
+            this->data_ = other.data_;
         } else{
-            this->data_ = NULL;
+            data_.clear();
+            this->N = 0;
         }
     }
+    std::cout << "Copy operator: size = " << this->N << std::endl;
+    printArray();
     return *this;
-}*/
+}
 
 void Span::addNumber(int n){
     if(data_.size() < N)
@@ -45,6 +43,11 @@ void Span::addNumber(int n){
      else
         throw OutOfRange();
     std::cout << "Added a number!" << std::endl;
+}
+
+void Span::addMultiple(unsighed int n){
+    for(unsigned int i = 0; i < n; i++)
+        addNumber();
 }
 
 void Span::printArray(){
