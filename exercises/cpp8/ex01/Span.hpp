@@ -21,7 +21,8 @@ public:
     Span &operator=(const Span &other);
 
     void addNumber(int n);
-    //void addMultiple(unsigned int n);
+    void addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end);
+    void fillFull(std::vector<int>::iterator first, std::vector<int>::iterator last);
     int shortestSpan();
     int longestSpan();
     unsigned int getN();
@@ -38,6 +39,13 @@ public:
 	public:
 		const char* what() const throw() {
 			return "There are less than 2 elements";
+		}
+	};
+
+    class AddingTooMany : public std::exception {
+	public:
+		const char* what() const throw() {
+			return "You are adding too many elements";
 		}
 	};
 };

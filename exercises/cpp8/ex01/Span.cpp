@@ -45,10 +45,19 @@ void Span::addNumber(int n){
     std::cout << "Added a number!" << std::endl;
 }
 
-/*void Span::addMultiple(unsigned int n){
-    for(unsigned int i = 0; i < n; i++)
-        addNumber();
-}*/
+void Span::addRange(std::vector<int>::iterator first, std::vector<int>::iterator last){
+    if(std::distance(first, last) > N - data_.size())
+        throw AddingTooMany();
+    data_.insert(data_.end(), first, last);
+}
+
+void Span::fillFull(std::vector<int>::iterator first, std::vector<int>::iterator last){
+    while(std::distance(first, last) > N - data_.size())
+        data_.insert(data_.end(), first, last);
+    std::vector<int>::iterator it = first;
+    while(data_.size() < N)
+        data_.push_back(*(it++));
+}
 
 void Span::printArray(){
     std::vector<int>::iterator it = data_.begin();

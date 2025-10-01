@@ -26,6 +26,14 @@ try{
 		std::cerr << "Exeption: " << e.what() << std::endl;
 }
 copy_o = sp;
+std::cout << "Range tests!!!!!" << std::endl;
+std::vector<int> v1;
+v1.push_back(1);
+v1.push_back(2);
+v1.push_back(3);
+Span big = Span(14);
+big.addRange(v1.begin(), v1.end());
+big.printArray();
 
 return 0;
 }
