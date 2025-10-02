@@ -27,6 +27,7 @@ public:
     int longestSpan();
     unsigned int getN();
     void printArray();
+    void printBig();
 
     class OutOfRange : public std::exception {
 	public:

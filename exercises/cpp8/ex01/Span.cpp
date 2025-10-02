@@ -46,16 +46,16 @@ void Span::addNumber(int n){
 }
 
 void Span::addRange(std::vector<int>::iterator first, std::vector<int>::iterator last){
-    if(std::distance(first, last) > N - data_.size())
+    if((unsigned)std::distance(first, last) > N - data_.size())
         throw AddingTooMany();
     data_.insert(data_.end(), first, last);
 }
 
 void Span::fillFull(std::vector<int>::iterator first, std::vector<int>::iterator last){
-    while(std::distance(first, last) > N - data_.size())
+    while((unsigned)std::distance(first, last) > N - data_.size()) // it never comes here
         data_.insert(data_.end(), first, last);
     std::vector<int>::iterator it = first;
-    while(data_.size() < N)
+    while(data_.size() < N) // comes straight here <-----------------------------------------
         data_.push_back(*(it++));
 }
 
@@ -63,6 +63,13 @@ void Span::printArray(){
     std::vector<int>::iterator it = data_.begin();
     for(; it != data_.end(); it++)
         std::cout << *it << std::endl;
+}
+
+void Span::printBig(){
+    std::vector<int>::iterator it = data_.begin();
+    for(; it != data_.end(); it++)
+        std::cout << "["<< *it << "]";
+    std::cout << std::endl;
 }
 int Span::shortestSpan(){
     if(data_.size() < 2)

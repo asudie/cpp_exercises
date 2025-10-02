@@ -33,7 +33,11 @@ v1.push_back(2);
 v1.push_back(3);
 Span big = Span(14);
 big.addRange(v1.begin(), v1.end());
+big.addRange(v1.begin(), v1.end());
 big.printArray();
-
+//std::cout << "10 000!!!!!" << std::endl;
+//Span big2 = Span(10000);
+//big2.fillFull(v1.begin(), v1.end());
+//big2.printBig();
 return 0;
 }
