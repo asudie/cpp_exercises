@@ -35,9 +35,11 @@ Span big = Span(14);
 big.addRange(v1.begin(), v1.end());
 big.addRange(v1.begin(), v1.end());
 big.printArray();
-//std::cout << "10 000!!!!!" << std::endl;
-//Span big2 = Span(10000);
-//big2.fillFull(v1.begin(), v1.end());
-//big2.printBig();
+std::cout << "10 000!!!!!" << std::endl;
+Span big2 = Span(10000);
+big2.fillFull(v1.begin(), v1.end());
+big2.printBig();
+std::cout << big2.shortestSpan() << std::endl;
+std::cout << big2.longestSpan() << std::endl;
 return 0;
 }

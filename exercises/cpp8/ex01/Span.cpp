@@ -1,6 +1,6 @@
 #include "Span.hpp"
 
-// Span::Span() : N(N), data_(NULL), filled(0){}
+Span::Span() : N(0){}
 Span::Span(unsigned int N) : N(N){
     std::cout << "Constructor!" << std::endl;
 }
@@ -52,10 +52,11 @@ void Span::addRange(std::vector<int>::iterator first, std::vector<int>::iterator
 }
 
 void Span::fillFull(std::vector<int>::iterator first, std::vector<int>::iterator last){
-    while((unsigned)std::distance(first, last) > N - data_.size()) // it never comes here
+    std::cout << "N = " << N << ", vector.size() = " << data_.size() << ", distance = " << std::distance(first, last) << std::endl;
+    while((unsigned)std::distance(first, last) < N - data_.size()) 
         data_.insert(data_.end(), first, last);
     std::vector<int>::iterator it = first;
-    while(data_.size() < N) // comes straight here <-----------------------------------------
+    while(data_.size() < N)
         data_.push_back(*(it++));
 }
 

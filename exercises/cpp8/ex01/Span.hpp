@@ -14,7 +14,7 @@ private:
     
 
 public:
-    //Span();
+    Span();
     Span(unsigned int N);
     ~Span();
     Span(const Span &other);
