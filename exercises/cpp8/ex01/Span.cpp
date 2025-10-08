@@ -88,20 +88,18 @@ int Span::shortestSpan(){
 }
 
 int Span::findMin(){
-    //  if(data_.size() < 2)
-    //     throw SpanNotEnough();
     std::vector<int>::iterator it = std::min_element(data_.begin(), data_.end());
     if(it != data_.end())
         return *it;
     else
-        throw SpanNotEnough(); // test this shit!!!
+        throw SpanNotEnough();
 }
 int Span::findMax(){
     std::vector<int>::iterator it = std::max_element(data_.begin(), data_.end());
     if(it != data_.end())
         return *it;
     else
-        throw SpanNotEnough(); // test this shit!!!
+        throw SpanNotEnough();
 }
 
 int Span::longestSpan(){
