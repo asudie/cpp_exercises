@@ -6,7 +6,6 @@ int main(int argc, char **argv){
     else {
         Rpn x;
         x.parse(argv[1]);
-        x.calculate();
     }
     return 0;
 }

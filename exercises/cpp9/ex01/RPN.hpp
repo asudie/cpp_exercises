@@ -6,8 +6,8 @@
 
 class Rpn{
 private:
-    std::stack<char> _stack;
+    std::stack<int> _stack;
 public:
-    int calculate();
-    int parse(char *str);
+    int calculate(int n1, int n2, char op);
+    void parse(char *str);
 };
