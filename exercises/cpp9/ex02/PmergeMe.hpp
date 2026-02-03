@@ -5,31 +5,51 @@
 #include <iostream>
 #include <string>
 
-class PmergeVector{
+template <template<typename T, typename ...> class Container>
+class PmergeMe{
 private:
-    std::vector<std::pair<unsigned int, unsigned int>> _vector;
+    using pair_t = std::pair<unsigned int, unsigned int>;
+    Container<pair_t> _container;
     std::vector<unsigned int> _main;
     std::vector<unsigned int> _pend;
     int _left;
     // timer
 public:
     //PmergeVector(){start timer}
-    void FordJohnson();
+    //void FordJohnson(char **argv);
     void parse();
     void addElmnt(std::pair<unsigned int, unsigned int> pair);
-    void setLeft(int n);
+    // void setLeft(int n);
+    void printContainer();
 };
-class PmergeDeque{
+
+class PmergeVector : public PmergeMe<std::vector> {
 private:
-    std::deque<std::pair<unsigned int, unsigned int>> _deque;
+    //std::vector<std::pair<unsigned int, unsigned int>> _vector;
+    //std::vector<unsigned int> _main;
+    //std::vector<unsigned int> _pend;
+    //int _left;
+    // timer
+public:
+    //PmergeVector(){start timer}
+    void FordJohnson(char **argv);
+   // void parse();
+    //void addElmnt(std::pair<unsigned int, unsigned int> pair);
+    //void setLeft(int n);
+};
+class PmergeDeque : public PmergeMe<std::deque>{
+private:
+    /*std::deque<std::pair<unsigned int, unsigned int>> _deque;
     std::deque<unsigned int> _main;
-    std::deque<unsigned int> _pend;
+    std::deque<unsigned int> _pend;*/
     int _left;
     // timer
 public:
     //PmergeDeque(){start timer}
-    void FordJohnson();
-    void parse();
+    void FordJohnson(char **argv);
+    /*void parse();
     void addElmnt(std::pair<unsigned int, unsigned int> pair);
-    void setLeft(int n);
+    void setLeft(int n);*/
 };
+
+std::pair<unsigned int, unsigned int> formPair(unsigned int n1, unsigned int n2);
