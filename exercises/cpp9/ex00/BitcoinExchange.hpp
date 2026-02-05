@@ -13,6 +13,7 @@ private:
 public:
     BitcoinExchange(){};
     ~BitcoinExchange(){};
+    // add orthodox
     void start(char *filename);
     void parse(const char *filename);
     void print_input(const char *filename);

@@ -73,6 +73,9 @@ void PmergeVector::FordJohnson(char **argv){
     }
     printContainer();
     formChains();
+    //recursively sort main    Can I do it with sort function?
+    //insert pending with jacobs sequence
+    //insert left over
 }
 
 
