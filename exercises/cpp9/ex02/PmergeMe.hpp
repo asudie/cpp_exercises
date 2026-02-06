@@ -25,6 +25,8 @@ public:
     void printContainer();
     void formChains();
     void printChains();
+    void recursiveSort(int n);
+    int findSmallst(int n);
 };
 
 class PmergeVector : public PmergeMe<std::vector> {

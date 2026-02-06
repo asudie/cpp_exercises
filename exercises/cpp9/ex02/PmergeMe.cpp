@@ -54,6 +54,30 @@ void PmergeDeque::addElmnt(std::pair<unsigned int, unsigned int> pair){
     _deque.push_back(pair);
 }*/
 
+template <template<typename, typename> class Container>
+int PmergeMe<Container>::findSmallst(int n){
+    unsigned int smallest = _main[n];
+    int smallest_index = n;
+    for(int i = n++; i < (int)_main.size(); i++){
+        if(_main[i] < smallest){
+            smallest = _main[i];
+            smallest_index = i;
+        }    
+    }
+    return smallest_index;
+}
+
+template <template<typename, typename> class Container>
+void PmergeMe<Container>::recursiveSort(int n){
+    if(n == (int)_main.size())
+        return;
+    unsigned int smallest = findSmallst(n);
+    int c = _main[smallest];
+    _main[smallest] = _main[n];
+    _main[n] = c;
+    recursiveSort(n++);
+}
+
 void PmergeVector::FordJohnson(char **argv){
     std::cout << "VECTOR" << std::endl;
     setLeft(-42);
@@ -73,6 +97,9 @@ void PmergeVector::FordJohnson(char **argv){
     }
     printContainer();
     formChains();
+    recursiveSort(0);
+    std::cout << "Sorted main" << std::endl;
+    printChains();
     //recursively sort main    Can I do it with sort function?
     //insert pending with jacobs sequence
     //insert left over
@@ -80,7 +107,7 @@ void PmergeVector::FordJohnson(char **argv){
 
 
 void PmergeDeque::FordJohnson(char **argv){
-    std::cout << "VECTOR" << std::endl;
+    std::cout << "DEQUE" << std::endl;
     setLeft(-42);
     argv++;
     while(*argv){
