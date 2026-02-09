@@ -15,7 +15,7 @@ int main(int argc, char **argv){
        // std::cout << "DEBUG[2]" << std::endl;
         PmergeVector vector;
        // std::cout << "DEBUG[4]" << std::endl;
-        // start timer for both
+        // TODO: start timer for both
         my_algo(&deque, &vector, argv);
         std::cout << "DEBUG[5]" << std::endl;
     } else {

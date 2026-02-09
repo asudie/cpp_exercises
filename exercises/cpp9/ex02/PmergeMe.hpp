@@ -27,6 +27,10 @@ public:
     void printChains();
     void recursiveSort(int n);
     int findSmallst(int n);
+    void insertJacobs();
+    std::deque<int> genJacobs();
+    int findSmallstCont(int n);
+    void recursiveSortCont(int n);
 };
 
 class PmergeVector : public PmergeMe<std::vector> {

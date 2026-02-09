@@ -46,14 +46,6 @@ void PmergeMe<Container>::setLeft(int n){_left = n;}
 template <template<typename, typename> class Container>
 int PmergeMe<Container>::getLeft(){return _left;}
 
-/*void PmergeVector::addElmnt(std::pair<unsigned int, unsigned int> pair){
-    _vector.push_back(pair);
-}
-
-void PmergeDeque::addElmnt(std::pair<unsigned int, unsigned int> pair){
-    _deque.push_back(pair);
-}*/
-
 template <template<typename, typename> class Container>
 int PmergeMe<Container>::findSmallst(int n){
     unsigned int smallest = _main[n];
@@ -75,7 +67,72 @@ void PmergeMe<Container>::recursiveSort(int n){
     int c = _main[smallest];
     _main[smallest] = _main[n];
     _main[n] = c;
-    recursiveSort(n++);
+    recursiveSort(n + 1);
+}
+
+template <template<typename, typename> class Container>
+int PmergeMe<Container>::findSmallstCont(int n){ // changed to cont
+    // std::cout << "FIND SM CONT 1" << std::endl;
+    unsigned int smallest = _container[n].second;
+    // std::cout << "FIND SM CONT 2" << std::endl;
+    int smallest_index = n;
+    // std::cout << "FIND SM CONT 3" << std::endl;
+    for(int i = n++; i < (int)_container.size(); i++){
+        if(_container[i].second < smallest){
+            smallest = _container[i].second;
+            smallest_index = i;
+        }    
+    }
+    // std::cout << "FIND SM CONT 4" << std::endl;
+    return smallest_index;
+}
+
+template <template<typename, typename> class Container>
+void PmergeMe<Container>::recursiveSortCont(int n){ // CHANGE TO CONT!
+    if(n == (int)_container.size())
+        return;
+    // std::cout << "SORT CONT 1" << std::endl;
+    unsigned int smallest = findSmallstCont(n);
+    // std::cout << "SORT CONT 2" << std::endl;
+    std::pair<int, int> c = _container[smallest]; // poiner to element in container
+    // std::cout << "SORT CONT 3" << std::endl;
+    _container[smallest] = _container[n];
+    // std::cout << "SORT CONT 4" << std::endl;
+    _container[n] = c;
+    // std::cout << "SORT CONT 5" << std::endl;
+    recursiveSortCont(n + 1);
+}
+
+template <template<typename, typename> class Container>
+std::deque<int> PmergeMe<Container>::genJacobs(){
+    std::deque<int> res;
+    res.push_back(0);
+    res.push_back(1);
+    for(int i = 0; i < (int)_pend.size(); i++){
+        res.push_back(_pend[i - 1] + 2 * _pend[i - 2]);
+    }
+    res.pop_front();
+    res.pop_front();
+
+    // DEBUG ****
+    std::deque<int>::iterator it = res.begin();
+    std::cout << "SEQUENCE" << std::endl;
+    for(; it != res.end(); it++)
+       std::cout << *it << std::endl;
+    // DEBUG ****
+
+    return res;
+}
+
+template <template<typename, typename> class Container>
+void PmergeMe<Container>::insertJacobs(){
+    std::deque<int> seq = genJacobs();
+
+    std::deque<int>::iterator it = seq.begin();
+    for(; it != seq.end(); it++){
+        // do smt
+    }
+
 }
 
 void PmergeVector::FordJohnson(char **argv){
@@ -96,11 +153,15 @@ void PmergeVector::FordJohnson(char **argv){
         argv++;
     }
     printContainer();
+    recursiveSortCont(0);
+    // then form chains
+    printContainer();
     formChains();
-    recursiveSort(0);
-    std::cout << "Sorted main" << std::endl;
+    // std::cout << "Reqursively sort vector!" << std::endl;
+    // recursiveSort(0);
+    // std::cout << "Sorted main" << std::endl;
     printChains();
-    //recursively sort main    Can I do it with sort function?
+    insertJacobs();
     //insert pending with jacobs sequence
     //insert left over
 }
@@ -124,8 +185,17 @@ void PmergeDeque::FordJohnson(char **argv){
         argv++;
     }
     printContainer();
+    recursiveSortCont(0);
+    // then form chains
+    printContainer();
     formChains();
-    // sort _main
+    // std::cout << "Reqursively sort vector!" << std::endl;
+    // recursiveSort(0);
+    // std::cout << "Sorted main" << std::endl;
+    printChains();
+    insertJacobs();
+    //insert pending with jacobs sequence
+    //insert left over
 }
 
 std::pair<unsigned int, unsigned int> formPair(unsigned int n1, unsigned int n2){
