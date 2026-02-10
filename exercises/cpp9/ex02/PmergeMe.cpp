@@ -125,12 +125,34 @@ std::deque<int> PmergeMe<Container>::genJacobs(){
 }
 
 template <template<typename, typename> class Container>
+void PmergeMe<Container>::putElm(int n, int index){
+    Container<int>::iterator it = _main.begin() + index;
+    for(; it != seq.begin(); it--){
+       if(n < *it && n > *(it - 1)){ // check if it works
+           int tmp = *it;
+           int tmp2;
+           it = n;
+            while(it != _main.end()){
+                tmp2 = *(it + 1);
+                it++;
+                it = tmp;
+                tmp = tmp2;
+            }
+            _main.push_back(tmp);
+            return;
+       }
+    }
+    // putFirst(); make it differ for deque cuz push front
+}
+
+
+template <template<typename, typename> class Container>
 void PmergeMe<Container>::insertJacobs(){
     std::deque<int> seq = genJacobs();
 
-    std::deque<int>::iterator it = seq.begin();
+    std::deque<int>::iterator it = seq.begin() + 1;
     for(; it != seq.end(); it++){
-        // do smt
+       putElm(_pend[*it], *it); 
     }
 
 }

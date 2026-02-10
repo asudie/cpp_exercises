@@ -31,6 +31,7 @@ public:
     std::deque<int> genJacobs();
     int findSmallstCont(int n);
     void recursiveSortCont(int n);
+    void putElm(int n, int index);
 };
 
 class PmergeVector : public PmergeMe<std::vector> {
