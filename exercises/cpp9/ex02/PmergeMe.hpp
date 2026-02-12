@@ -8,7 +8,7 @@
 
 template <template<typename, typename> class Container>
 class PmergeMe{
-private:
+protected:
     typedef std::pair<unsigned int, unsigned int> pair_t;
     Container<pair_t, std::allocator<pair_t> > _container;
     Container<unsigned int, std::allocator<unsigned int> > _main;
@@ -32,6 +32,7 @@ public:
     int findSmallstCont(int n);
     void recursiveSortCont(int n);
     void putElm(int n, int index);
+    virtual void pushFront() = 0;
 };
 
 class PmergeVector : public PmergeMe<std::vector> {
@@ -44,6 +45,7 @@ private:
 public:
     //PmergeVector(){start timer}
     void FordJohnson(char **argv);
+    void pushFront();
    // void parse();
     //void addElmnt(std::pair<unsigned int, unsigned int> pair);
     //void setLeft(int n);
@@ -58,6 +60,7 @@ private:
 public:
     //PmergeDeque(){start timer}
     void FordJohnson(char **argv);
+    void pushFront();
     /*void parse();
     void addElmnt(std::pair<unsigned int, unsigned int> pair);
     void setLeft(int n);*/

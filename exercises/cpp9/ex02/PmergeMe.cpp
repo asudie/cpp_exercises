@@ -37,7 +37,7 @@ void PmergeMe<Container>::formChains(){
         _pend.push_back(it->first);
         _main.push_back(it->second);
     }
-    printChains();
+    // printChains();
 }
 
 template <template<typename, typename> class Container>
@@ -108,8 +108,9 @@ std::deque<int> PmergeMe<Container>::genJacobs(){
     std::deque<int> res;
     res.push_back(0);
     res.push_back(1);
-    for(int i = 0; i < (int)_pend.size(); i++){
-        res.push_back(_pend[i - 1] + 2 * _pend[i - 2]);
+    res.push_back(1);
+    for(int i = 3; i < (int)_pend.size() + 2; i++){
+        res.push_back(res[i - 1] + 2 * res[i - 2]);
     }
     res.pop_front();
     res.pop_front();
@@ -126,35 +127,58 @@ std::deque<int> PmergeMe<Container>::genJacobs(){
 
 template <template<typename, typename> class Container>
 void PmergeMe<Container>::putElm(int n, int index){
-    Container<int>::iterator it = _main.begin() + index;
-    for(; it != seq.begin(); it--){
-       if(n < *it && n > *(it - 1)){ // check if it works
+    typename Container<unsigned int, std::allocator<unsigned int> >::iterator it = _main.begin() + index;
+    for(; it != _main.begin(); it--){
+       if((unsigned)n < *it && (unsigned)n > *(it - 1)){ // check if it works
            int tmp = *it;
            int tmp2;
-           it = n;
+           it = _main.begin() + n;
             while(it != _main.end()){
                 tmp2 = *(it + 1);
                 it++;
-                it = tmp;
+                it = _main.begin() + tmp;
                 tmp = tmp2;
             }
             _main.push_back(tmp);
             return;
        }
     }
-    // putFirst(); make it differ for deque cuz push front
+    // put front
 }
 
+void PmergeVector::pushFront(){
+    std::cout << "VECTOR PUSH FRONT" << std::endl;
+    std::vector<unsigned int>::iterator it = _main.begin();
+    unsigned int tmp = _pend[0]; //0
+    unsigned int tmp2;
+    while(it != _main.end()){
+        tmp2 = *it; //1
+        *it = tmp;//0
+        it++; //2
+        tmp = *it;// 2
+        *it = tmp;
+        tmp = tmp2;
+    }
+    _main.push_back(tmp);
+    return;
+}
+
+void PmergeDeque::pushFront(){
+    std::cout << "DEQUE PUSH FRONT" << std::endl;
+    _main.push_front(_pend[0]);
+}
 
 template <template<typename, typename> class Container>
 void PmergeMe<Container>::insertJacobs(){
     std::deque<int> seq = genJacobs();
 
+    pushFront(); // first pend(differ for deque)
+
     std::deque<int>::iterator it = seq.begin() + 1;
-    for(; it != seq.end(); it++){
+    for(; it != seq.end(); it++){ // TODO: while =! previous jacobs num it --
        putElm(_pend[*it], *it); 
     }
-
+    // printChains();
 }
 
 void PmergeVector::FordJohnson(char **argv){
@@ -174,16 +198,18 @@ void PmergeVector::FordJohnson(char **argv){
         addElmnt(pair);
         argv++;
     }
-    printContainer();
+    // printContainer();
     recursiveSortCont(0);
     // then form chains
-    printContainer();
+    // printContainer();
     formChains();
     // std::cout << "Reqursively sort vector!" << std::endl;
     // recursiveSort(0);
     // std::cout << "Sorted main" << std::endl;
     printChains();
     insertJacobs();
+    std::cout << "INSERT" << std::endl;
+    printChains();
     //insert pending with jacobs sequence
     //insert left over
 }
@@ -206,16 +232,18 @@ void PmergeDeque::FordJohnson(char **argv){
         addElmnt(pair);
         argv++;
     }
-    printContainer();
+    // printContainer();
     recursiveSortCont(0);
     // then form chains
-    printContainer();
+    // printContainer();
     formChains();
     // std::cout << "Reqursively sort vector!" << std::endl;
     // recursiveSort(0);
     // std::cout << "Sorted main" << std::endl;
     printChains();
     insertJacobs();
+    std::cout << "INSERT" << std::endl;
+    printChains();
     //insert pending with jacobs sequence
     //insert left over
 }
