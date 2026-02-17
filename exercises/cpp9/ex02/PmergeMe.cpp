@@ -106,12 +106,23 @@ void PmergeMe<Container>::recursiveSortCont(int n){ // CHANGE TO CONT!
 template <template<typename, typename> class Container>
 std::deque<int> PmergeMe<Container>::genJacobs(){
     std::deque<int> res;
+
+    int size = static_cast<int>(_pend.size());
+
     res.push_back(0);
     res.push_back(1);
-    res.push_back(1);
-    for(int i = 3; i < (int)_pend.size() + 2; i++){
-        res.push_back(res[i - 1] + 2 * res[i - 2]);
+
+    while (true)
+    {
+        int next = res[res.size() - 1] + 
+                   2 * res[res.size() - 2];
+
+        res.push_back(next);
+        if (next >= size)
+            break;
     }
+
+    // remove first 0
     res.pop_front();
     res.pop_front();
 
@@ -120,36 +131,32 @@ std::deque<int> PmergeMe<Container>::genJacobs(){
     std::cout << "SEQUENCE" << std::endl;
     for(; it != res.end(); it++)
        std::cout << *it << std::endl;
-    // DEBUG ****
-
+    // // DEBUG ****
     return res;
 }
 
 template <template<typename, typename> class Container>
-void PmergeMe<Container>::putElm(int n, int index){
-    typename Container<unsigned int, std::allocator<unsigned int> >::iterator it = _main.begin() + index;
-    for(; it != _main.begin(); it--){
-       if((unsigned)n < *it && (unsigned)n > *(it - 1)){ // check if it works
-           int tmp = *it;
-           int tmp2;
-           it = _main.begin() + n;
-            while(it != _main.end()){
-                tmp2 = *(it + 1);
-                it++;
-                it = _main.begin() + tmp;
-                tmp = tmp2;
-            }
-            _main.push_back(tmp);
-            return;
-       }
+void PmergeMe<Container>::putElm(int n, int index){ // TODO: should it be limited range binary search???
+    int left = 0;
+    int right = index;
+
+    while (left < right)
+    {
+        int mid = left + (right - left) / 2;
+
+        if (_main[mid] < static_cast<unsigned int>(n))
+            left = mid + 1;
+        else
+            right = mid;
     }
-    // put front
+
+    _main.insert(_main.begin() + left, n);
 }
 
-void PmergeVector::pushFront(){
+void PmergeVector::pushFront(unsigned int n){
     std::cout << "VECTOR PUSH FRONT" << std::endl;
     std::vector<unsigned int>::iterator it = _main.begin();
-    unsigned int tmp = _pend[0]; //0
+    unsigned int tmp = n; //0
     unsigned int tmp2;
     while(it != _main.end()){
         tmp2 = *it; //1
@@ -163,22 +170,46 @@ void PmergeVector::pushFront(){
     return;
 }
 
-void PmergeDeque::pushFront(){
+void PmergeDeque::pushFront(unsigned int n){
     std::cout << "DEQUE PUSH FRONT" << std::endl;
-    _main.push_front(_pend[0]);
+    _main.push_front(n);
 }
 
 template <template<typename, typename> class Container>
 void PmergeMe<Container>::insertJacobs(){
     std::deque<int> seq = genJacobs();
 
-    pushFront(); // first pend(differ for deque)
+    pushFront(_pend[0]);
 
-    std::deque<int>::iterator it = seq.begin() + 1;
-    for(; it != seq.end(); it++){ // TODO: while =! previous jacobs num it --
-       putElm(_pend[*it], *it); 
+    for (size_t k = 0; k < seq.size(); k++)
+    {
+        int curr = seq[k];
+
+        if (curr >= (int)_pend.size())
+            break;
+
+        std::cout << "DEBUG INSERT: index = "
+                  << curr
+                  << ", value = "
+                  << _pend[curr]
+                  << std::endl;
+
+        putElm(_pend[curr], curr);
+
+        int prev = (k == 0) ? 0 : seq[k - 1];
+
+        for (int i = curr - 1; i > prev; i--)
+        {
+            std::cout << "DEBUG INSERT: index = "
+                      << i
+                      << ", value = "
+                      << _pend[i]
+                      << std::endl;
+
+            putElm(_pend[i], i);
+        }
     }
-    // printChains();
+    putElm(_left, _main.size());
 }
 
 void PmergeVector::FordJohnson(char **argv){

@@ -32,7 +32,7 @@ public:
     int findSmallstCont(int n);
     void recursiveSortCont(int n);
     void putElm(int n, int index);
-    virtual void pushFront() = 0;
+    virtual void pushFront(unsigned int n) = 0;
 };
 
 class PmergeVector : public PmergeMe<std::vector> {
@@ -45,7 +45,7 @@ private:
 public:
     //PmergeVector(){start timer}
     void FordJohnson(char **argv);
-    void pushFront();
+    void pushFront(unsigned int n);
    // void parse();
     //void addElmnt(std::pair<unsigned int, unsigned int> pair);
     //void setLeft(int n);
@@ -60,7 +60,7 @@ private:
 public:
     //PmergeDeque(){start timer}
     void FordJohnson(char **argv);
-    void pushFront();
+    void pushFront(unsigned int n);
     /*void parse();
     void addElmnt(std::pair<unsigned int, unsigned int> pair);
     void setLeft(int n);*/
