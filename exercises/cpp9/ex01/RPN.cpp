@@ -1,7 +1,20 @@
 #include "RPN.hpp"
 
+Rpn::Rpn(){}
+
+Rpn::Rpn(const Rpn &other){
+	*this = other;
+}
+
+Rpn &Rpn::operator=(const Rpn &other){
+	if(this != &other)
+		this->_stack = other._stack;
+	return *this;
+}
+
+Rpn::~Rpn(){}
+
 int Rpn::calculate(int n1, int n2, char op){
-   //std::cout << "op = " << op << std::endl;
     switch(op){
         case '+':
             _stack.push(n2 + n1);

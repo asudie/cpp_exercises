@@ -1,20 +1,54 @@
 #include "PmergeMe.hpp"
 
 template <template<typename, typename> class Container>
+PmergeMe<Container>::PmergeMe(){}
+
+
+template <template<typename, typename> class Container>
+PmergeMe<Container>::PmergeMe(const PmergeMe &other){
+	*this = other;
+}
+
+template <template<typename, typename> class Container>
+PmergeMe<Container> &PmergeMe<Container>::operator=(const PmergeMe<Container> &other){
+    if (this != &other) {
+        _container = other._container;
+        _main = other._main;
+        _pend = other._pend;
+        _left = other._left;
+        _start = other._start;
+        _end = other._end;
+        _name = other._name;
+        _size = other._size;
+    }
+	return *this;
+}
+
+template <template<typename, typename> class Container>
+PmergeMe<Container>::~PmergeMe(){}
+
+template <template<typename, typename> class Container>
 void PmergeMe<Container>::addElmnt(std::pair<unsigned int, unsigned int> pair){
     _container.push_back(pair);
 }
 
 template <template<typename, typename> class Container>
 void PmergeMe<Container>::printContainer(){
-    //std::cout << "DEBUG[PRINT1]" << std::endl;
     typename Container<pair_t, std::allocator<pair_t> >::iterator it = _container.begin();
-    std::cout << "DEBUG[PRINT LOOP]" << std::endl;
+    std::cout << "Before: ";
+    int i = 0;
     for(; it != _container.end(); it++){
-        std::cout << "1[" << it->first << "]" << "2[" << it->second << "]" << std::endl;
+        std::cout << it->first << " " << it->second << " ";
+        if(i == 5)
+        {
+            std::cout << "[...] ";
+            break;
+        }
+        i++;
     }
     if(_left > 0)
-        std::cout << "Left[" << _left << "]" << std::endl;
+        std::cout << _left;
+    std::cout << std::endl;
 
 }
 
@@ -37,7 +71,6 @@ void PmergeMe<Container>::formChains(){
         _pend.push_back(it->first);
         _main.push_back(it->second);
     }
-    // printChains();
 }
 
 template <template<typename, typename> class Container>
@@ -71,35 +104,26 @@ void PmergeMe<Container>::recursiveSort(int n){
 }
 
 template <template<typename, typename> class Container>
-int PmergeMe<Container>::findSmallstCont(int n){ // changed to cont
-    // std::cout << "FIND SM CONT 1" << std::endl;
+int PmergeMe<Container>::findSmallstCont(int n){
     unsigned int smallest = _container[n].second;
-    // std::cout << "FIND SM CONT 2" << std::endl;
     int smallest_index = n;
-    // std::cout << "FIND SM CONT 3" << std::endl;
     for(int i = n++; i < (int)_container.size(); i++){
         if(_container[i].second < smallest){
             smallest = _container[i].second;
             smallest_index = i;
         }    
     }
-    // std::cout << "FIND SM CONT 4" << std::endl;
     return smallest_index;
 }
 
 template <template<typename, typename> class Container>
-void PmergeMe<Container>::recursiveSortCont(int n){ // CHANGE TO CONT!
+void PmergeMe<Container>::recursiveSortCont(int n){
     if(n == (int)_container.size())
         return;
-    // std::cout << "SORT CONT 1" << std::endl;
     unsigned int smallest = findSmallstCont(n);
-    // std::cout << "SORT CONT 2" << std::endl;
-    std::pair<int, int> c = _container[smallest]; // poiner to element in container
-    // std::cout << "SORT CONT 3" << std::endl;
+    std::pair<int, int> c = _container[smallest];
     _container[smallest] = _container[n];
-    // std::cout << "SORT CONT 4" << std::endl;
     _container[n] = c;
-    // std::cout << "SORT CONT 5" << std::endl;
     recursiveSortCont(n + 1);
 }
 
@@ -121,22 +145,20 @@ std::deque<int> PmergeMe<Container>::genJacobs(){
         if (next >= size)
             break;
     }
-
-    // remove first 0
     res.pop_front();
     res.pop_front();
 
     // DEBUG ****
-    std::deque<int>::iterator it = res.begin();
-    std::cout << "SEQUENCE" << std::endl;
-    for(; it != res.end(); it++)
-       std::cout << *it << std::endl;
-    // // DEBUG ****
+    // std::deque<int>::iterator it = res.begin();
+    // std::cout << "SEQUENCE" << std::endl;
+    // for(; it != res.end(); it++)
+    //    std::cout << *it << std::endl;
+    // DEBUG ****
     return res;
 }
 
 template <template<typename, typename> class Container>
-void PmergeMe<Container>::putElm(int n, int index){ // TODO: should it be limited range binary search???
+void PmergeMe<Container>::putElm(int n, int index){
     int left = 0;
     int right = index;
 
@@ -154,15 +176,14 @@ void PmergeMe<Container>::putElm(int n, int index){ // TODO: should it be limite
 }
 
 void PmergeVector::pushFront(unsigned int n){
-    std::cout << "VECTOR PUSH FRONT" << std::endl;
     std::vector<unsigned int>::iterator it = _main.begin();
-    unsigned int tmp = n; //0
+    unsigned int tmp = n;
     unsigned int tmp2;
     while(it != _main.end()){
-        tmp2 = *it; //1
-        *it = tmp;//0
-        it++; //2
-        tmp = *it;// 2
+        tmp2 = *it;
+        *it = tmp;
+        it++;
+        tmp = *it;
         *it = tmp;
         tmp = tmp2;
     }
@@ -171,7 +192,6 @@ void PmergeVector::pushFront(unsigned int n){
 }
 
 void PmergeDeque::pushFront(unsigned int n){
-    std::cout << "DEQUE PUSH FRONT" << std::endl;
     _main.push_front(n);
 }
 
@@ -188,11 +208,11 @@ void PmergeMe<Container>::insertJacobs(){
         if (curr >= (int)_pend.size())
             break;
 
-        std::cout << "DEBUG INSERT: index = "
-                  << curr
-                  << ", value = "
-                  << _pend[curr]
-                  << std::endl;
+        // std::cout << "DEBUG INSERT: index = "
+        //           << curr
+        //           << ", value = "
+        //           << _pend[curr]
+        //           << std::endl;
 
         putElm(_pend[curr], curr);
 
@@ -200,83 +220,130 @@ void PmergeMe<Container>::insertJacobs(){
 
         for (int i = curr - 1; i > prev; i--)
         {
-            std::cout << "DEBUG INSERT: index = "
-                      << i
-                      << ", value = "
-                      << _pend[i]
-                      << std::endl;
+            // std::cout << "DEBUG INSERT: index = "
+            //           << i
+            //           << ", value = "
+            //           << _pend[i]
+            //           << std::endl;
 
             putElm(_pend[i], i);
         }
     }
-    putElm(_left, _main.size());
+    if(_left != -42)
+        putElm(_left, _main.size());
 }
 
-void PmergeVector::FordJohnson(char **argv){
-    std::cout << "VECTOR" << std::endl;
-    setLeft(-42);
-    argv++;
+template <template<typename, typename> class Container>
+void PmergeMe<Container>::finalPrint(){
+    std::cout << "After: ";
+    for(int i = 0; i < (int)_main.size(); i++){
+        if(i == 10)
+        {
+            std::cout << "[...] ";
+            break;
+        }
+        std::cout << _main[i] << " ";
+    }
+    std::cout << std::endl;
+    std::chrono::duration<double, std::micro> duration = _end - _start;
+    std::cout << "Time to process a range of " << _size << " elements with std::" << _name << " : " << duration.count() << " us" << std::endl;
+}
+
+unsigned int safeStoi(const char* str)
+{
+    try
+    {
+        int value = std::stoi(str);
+
+        if (value < 0)
+            throw std::invalid_argument("negative");
+
+        return static_cast<unsigned int>(value);
+    }
+    catch (...)
+    {
+        std::cout << "Error: wrong numbers!" << std::endl;
+        std::exit(1);
+    }
+}
+
+template <template<typename, typename> class Container>
+void PmergeMe<Container>::parseArgs(char **argv){
+    std::vector<unsigned int>tmp;
+    _size = 0;
+    argv++; // TODO: make it orthodox
     while(*argv){
-        unsigned int n1 = static_cast<unsigned int>(std::stoi(*argv));
+        unsigned int n1 = safeStoi(*argv);
+        if(std::find(tmp.begin(), tmp.end(), n1) != tmp.end()){
+            std::cout << "Error: duplicate found!" << std::endl;
+            std::exit(1);
+        }
+        tmp.push_back(n1);
+        _size++;
         argv++;
         if(!*argv){
             setLeft(n1);
             break;
         }
-        unsigned int n2 = static_cast<unsigned int>(std::stoi(*argv));
-        std::cout << "n1 = " << n1 << ", n2 = " << n2 << std::endl;
+        unsigned int n2 = safeStoi(*argv);
+        if(std::find(tmp.begin(), tmp.end(), n2) != tmp.end()){
+            std::cout << "Error: duplicate found!" << std::endl;
+            std::exit(1);
+        }
+        tmp.push_back(n2);
+        _size++;
         std::pair<unsigned int, unsigned int> pair = formPair(n1, n2);
         addElmnt(pair);
         argv++;
     }
+    printContainer();
+}
+
+template <template<typename, typename> class Container>
+void PmergeMe<Container>::startTimer(){
+    _start = std::chrono::high_resolution_clock::now();
+}
+
+template <template<typename, typename> class Container>
+void PmergeMe<Container>::stopTimer(){
+    _end = std::chrono::high_resolution_clock::now();
+}
+
+void PmergeVector::setName(){
+    _name = "vector";
+}
+
+void PmergeDeque::setName(){
+    _name = "deque";
+}
+
+void PmergeVector::FordJohnson(char **argv){
+    setName();
+    startTimer();
+    setLeft(-42);
+    parseArgs(argv);
     // printContainer();
     recursiveSortCont(0);
-    // then form chains
-    // printContainer();
     formChains();
-    // std::cout << "Reqursively sort vector!" << std::endl;
-    // recursiveSort(0);
-    // std::cout << "Sorted main" << std::endl;
-    printChains();
     insertJacobs();
-    std::cout << "INSERT" << std::endl;
-    printChains();
-    //insert pending with jacobs sequence
-    //insert left over
+    // printChains();
+    stopTimer();
+    finalPrint();
 }
 
 
 void PmergeDeque::FordJohnson(char **argv){
-    std::cout << "DEQUE" << std::endl;
+    setName();
+    startTimer();
     setLeft(-42);
-    argv++;
-    while(*argv){
-        unsigned int n1 = static_cast<unsigned int>(std::stoi(*argv));
-        argv++;
-        if(!*argv){
-            setLeft(n1);
-            break;
-        }
-        unsigned int n2 = static_cast<unsigned int>(std::stoi(*argv));
-        std::cout << "n1 = " << n1 << ", n2 = " << n2 << std::endl;
-        std::pair<unsigned int, unsigned int> pair = formPair(n1, n2);
-        addElmnt(pair);
-        argv++;
-    }
+    parseArgs(argv);
     // printContainer();
     recursiveSortCont(0);
-    // then form chains
-    // printContainer();
     formChains();
-    // std::cout << "Reqursively sort vector!" << std::endl;
-    // recursiveSort(0);
-    // std::cout << "Sorted main" << std::endl;
-    printChains();
     insertJacobs();
-    std::cout << "INSERT" << std::endl;
-    printChains();
-    //insert pending with jacobs sequence
-    //insert left over
+    // printChains();
+    stopTimer();
+    finalPrint();
 }
 
 std::pair<unsigned int, unsigned int> formPair(unsigned int n1, unsigned int n2){

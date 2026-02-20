@@ -1,5 +1,19 @@
 #include "BitcoinExchange.hpp"
 
+BitcoinExchange::BitcoinExchange(){}
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other){
+	*this = other;
+}
+
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other){
+	if(this != &other)
+		this->_data = other._data;
+	return *this;
+}
+
+BitcoinExchange::~BitcoinExchange(){}
+
 void BitcoinExchange::start(char *filename){
     std::ifstream f;
     const char *data = "data.csv";
